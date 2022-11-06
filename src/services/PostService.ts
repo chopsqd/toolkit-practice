@@ -4,7 +4,7 @@ import {IPost} from "../models/IPost";
 export const postAPI = createApi({
     reducerPath: 'postAPI',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://jsonplaceholder.typicode.com/'
+        baseUrl: 'http://localhost:5000/'
     }),
     endpoints: (build) => ({
         // query() - получение данных с сервера (get запрос)
