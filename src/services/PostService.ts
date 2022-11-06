@@ -6,16 +6,41 @@ export const postAPI = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000/'
     }),
+    tagTypes: ['Post'],
     endpoints: (build) => ({
         // query() - получение данных с сервера (get запрос)
         // mutation() - изменение данных (post/put запрос)
-    fetchAllPosts: build.query<IPost[], number>({
-        query: (limit: number = 5) => ({
-            url: `posts`,
-            params: {
-                _limit: limit
-            }
-        })
+        fetchAllPosts: build.query<IPost[], number>({
+            query: (limit: number = 5) => ({
+                url: `posts`,
+                params: {
+                    _limit: limit
+                }
+            }),
+            providesTags: result => ['Post']
+        }),
+        createPost: build.mutation<IPost, IPost>({
+            query: (post) => ({
+                url: `posts`,
+                method: 'POST',
+                body: post
+            }),
+            invalidatesTags: ['Post']
+        }),
+        updatePost: build.mutation<IPost, IPost>({
+            query: (post) => ({
+                url: `posts/${post.id}`,
+                method: 'PUT',
+                body: post
+            }),
+            invalidatesTags: ['Post']
+        }),
+        deletePost: build.mutation<IPost, IPost>({
+            query: (post) => ({
+                url: `posts/${post.id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Post']
+        }),
     })
-})
 })
